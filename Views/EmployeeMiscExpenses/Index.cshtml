@@ -1,0 +1,287 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Corecon External API Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Credential_Mvc_sample.Models.MiscExpensesTime
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+
+<div>
+    <ul role="tablist" class="response-tab">
+        <li role="presentation" class="response-list">
+            <input type="button" title="Form Input" value="Form Input" class="response-btn"
+                   onclick="location.href='@Url.Action("FormInput", "EmployeeMiscExpenses")'" />
+        </li>
+        <li role="presentation" class="response-list">
+            <input type="button" title="File Input" value="File Input" class="response-btn"
+                   onclick="location.href='@Url.Action("FileInput", "EmployeeMiscExpenses")'" />
+        </li>
+    </ul>
+</div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+@if (ViewBag.Response == "fileinput")
+{
+    using (Html.BeginForm("ImportExcel", "EmployeeMiscExpenses", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>File:</td>
+                <td>
+                    <input type="file" name="UploadedFile" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" name="Submit" value="Import Excel" class="primaryButton_icon" />
+                </td>
+            </tr>
+        </table>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+    }
+}
+@if (ViewBag.Response == "forminput")
+{
+    using (Html.BeginForm("JsonTimeData", "EmployeeMiscExpenses", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ProjectNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ProjectNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ProjectNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.PrimeContractNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.PrimeContractNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.PrimeContractNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left">
+                @Html.LabelFor(model => model.ChangeOrderNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ChangeOrderNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ChangeOrderNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ExpenseDate)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ExpenseDate, new { @class = "form-control", @placeholder = "DD-MM-YYYY" })
+                @Html.ValidationMessageFor(Model => Model.ExpenseDate)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ExpenseType)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ExpenseType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ExpenseType)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.PaymentType)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.PaymentType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.PaymentType)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.EmployeeName)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.EmployeeName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.EmployeeName)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.PayeeType)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.PayeeType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.PayeeType)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.PayeeCompany)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.PayeeCompany, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.PayeeCompany)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemDescription)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemDescription)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemUnit)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemUnit, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemUnit)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemQuantity)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemQuantity)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemUnitPrice)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemUnitPrice, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemUnitPrice)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemResource)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemResource, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemResource)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ItemCostCode)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemCostCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemCostCode)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left">
+                @Html.LabelFor(model => model.ItemTaxCode)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ItemTaxCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ItemTaxCode)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.BillableStatus)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.BillableStatus, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.BillableStatus)
+            </div>
+        </div>
+
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right">
+                <button type="submit" class="primaryButton_icon">Verify Data</button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-2"></div>
+        </div>
+        <div class="vspace"></div>
+    }
+    if (ViewBag.DataGenerate == "yes")
+    {
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 readonly_sub_header padding_none"><b>Time Card Data:</b></div>
+            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 responsedv">
+                @TempData.Peek("JsonData")
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right">
+                <input type="button" title="Submit" value="Submit" class="primaryButton_icon"
+                       onclick="location.href='@Url.Action("PostTimeCard", "EmployeeMiscExpenses")'" />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-2"></div>
+        </div>
+    }
+}
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>
+<div class="row">
+    @if (@ViewBag.Message != null)
+    {
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>API Response:</b></div>
+        <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 responsedv">
+            @ViewBag.Message
+        </div>
+    }
+    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10">
+        @ViewBag.Error
+    </div>
+    <div class="col-lg-1 col-md-1"></div>
+</div>

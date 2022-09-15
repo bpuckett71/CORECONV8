@@ -1,0 +1,104 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Corecon External API Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Credential_Mvc_sample.Models.Token
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="row">
+    <div class="col-lg-4">        
+        <input type="button" title="Get Cost Financials" value="Get Cost Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetCostFinancials" })'" />
+        <br /><br />
+        <input type="button" title="Get Cost Resource Financials" value="Get Cost Resource Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetCostResourceFinancials" })'" /><br /><br />
+        <input type="button" title="Get Cost Plus Financials" value="Get Cost Plus Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetCostPlusFinancials" })'" /><br /><br />
+        <input type="button" title="Get Unit Price Financials" value="Get Unit Price Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetUnitPriceFinancials" })'" /><br /><br />
+        <input type="button" title="Get Revenue Financials" value="Get Revenue Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetRevenueFinancials" })'" /><br /><br />
+        <input type="button" title="Get Hour Financials" value="Get Hour Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetHourFinancials" })'" /><br /><br />
+        <input type="button" title="Get Hour Historical Financials" value="Get Hour Historical Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial"
+                                      , new { accessToken = @Model.AccessToken, apiURI= "GetHourHistoricalFinancials" })'" />
+
+        <br />
+        <br />
+        <input type="button" title="Get Overview Financials" value="Get Overview Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetOverviewFinancials" })'" />
+        <br />
+        <br />
+        <input type="button" title="Get Overview Historical Financials" value="Get Overview Historical Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                            new { accessToken = @Model.AccessToken, apiURI= "GetOverviewHistoricalFinancials" })'" />
+        <br />
+        <br />
+        <input type="button" title="Get Overview Detail Financials" value="Get Overview Detail Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                            new { accessToken = @Model.AccessToken, apiURI= "GetOverviewDetailFinancials" })'" />
+        <br />
+        <br />
+        <input type="button" title="Get WIP Financials" value="Get WIP Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                            new { accessToken = @Model.AccessToken, apiURI= "GetWIPFinancials" })'" />
+        <br />
+        <br />
+        <input type="button" title="Get Vendor Cost Financials" value="Get Vendor Cost Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                            new { accessToken = @Model.AccessToken, apiURI= "GetVendorCostFinancials" })'" />
+
+        <br />
+        <br />
+        <input type="button" title="Get Change Order Financials" value="Get Change Order Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+
+                                            new { accessToken = @Model.AccessToken, apiURI= "GetChangeOrderFinancials" })'" />
+        <br />
+        <br />
+        <input type="button" title="Get Financials" value="Get Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial", new { accessToken = @Model.AccessToken, apiURI= "GetFinancials" })'" />
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <input type="button" title="Get Retainage Financials" value="Get Retainage Financials" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetProjectFinancials", "ProjectFinancial",
+                                      new { accessToken = @Model.AccessToken, apiURI= "GetRetainageFinancials" })'" />
+
+
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-lg-12">
+                <b>API Response:</b>
+
+                <pre>
+        @Html.Raw(ViewBag.JsonData)
+        </pre>
+
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-lg-12">
+
+                @ViewBag.Error
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<br />
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>

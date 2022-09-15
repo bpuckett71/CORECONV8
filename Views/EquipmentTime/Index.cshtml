@@ -1,0 +1,210 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Corecon External API Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Credential_Mvc_sample.Models.EquipmentTimeCard
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+
+<div>
+    <ul role="tablist" class="response-tab">
+        <li role="presentation" class="response-list">
+            <input type="button" title="Form Input" value="Form Input" class="response-btn"
+                   onclick="location.href='@Url.Action("FormInput", "EquipmentTime")'" />
+        </li>
+        <li role="presentation" class="response-list">
+            <input type="button" title="File Input" value="File Input" class="response-btn"
+                   onclick="location.href='@Url.Action("FileInput", "EquipmentTime")'" />
+        </li>
+    </ul>
+</div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+@if (ViewBag.Response == "fileinput")
+{
+    using (Html.BeginForm("ImportExcel", "EquipmentTime", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>File:</td>
+                <td>
+                    <input type="file" name="UploadedFile" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" name="Submit" value="Import Excel" class="primaryButton_icon" />
+                </td>
+            </tr>
+        </table>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+    }
+}
+@if (ViewBag.Response == "forminput")
+{
+    using (Html.BeginForm("JsonTimeData", "EquipmentTime", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.Date)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @placeholder = "DD-MM-YYYY" })
+                @Html.ValidationMessageFor(Model => Model.Date)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.EquipmentCode)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.EquipmentCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.EquipmentCode)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ProjectNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ProjectNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ProjectNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.PrimeContractNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.PrimeContractNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.PrimeContractNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left">
+                @Html.LabelFor(model => model.ChangeOrderNumber)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ChangeOrderNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ChangeOrderNumber)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.CostCode)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.CostCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.CostCode)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.RTHours)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.RTHours, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.RTHours)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.ITHours)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.ITHours, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.ITHours)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.DTHours)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.DTHours, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.DTHours)
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-left required">
+                @Html.LabelFor(model => model.BillableStatus)
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @Html.TextBoxFor(model => model.BillableStatus, new { @class = "form-control" })
+                @Html.ValidationMessageFor(Model => Model.BillableStatus)
+            </div>
+        </div>
+
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right">
+                <button type="submit" class="primaryButton_icon">Verify Data</button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-2"></div>
+        </div>
+        <div class="vspace"></div>
+    }
+    if (ViewBag.DataGenerate == "yes")
+    {
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 readonly_sub_header padding_none"><b>Time Card Data:</b></div>
+            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 responsedv">
+                @TempData.Peek("JsonData")
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right">
+                <input type="button" title="Submit" value="Submit" class="primaryButton_icon"
+                       onclick="location.href='@Url.Action("PostTimeCard", "EquipmentTime")'" />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-2"></div>
+        </div>
+    }
+}
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>
+<div class="row">
+    @if (@ViewBag.Message != null)
+    {
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>API Response:</b></div>
+        <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 responsedv">
+            @ViewBag.Message
+        </div>
+    }
+    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10">
+        @ViewBag.Error
+    </div>
+    <div class="col-lg-1 col-md-1"></div>
+</div>

@@ -1,0 +1,44 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Corecon External API Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Credential_Mvc_sample.Models.Token
+
+<!-- Main Header -->
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="vspace"></div>
+@*<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding_none">
+        <input type="button" title="Get token by refresh Token" value="Get  token by Refresh Token" class="primaryButton_icon"
+               onclick="location.href='@Url.Action("GetRefreshToken", "callback", new { refresh_token = @Model.RefreshToken })'" />               
+    </div>
+</div>*@
+<div class="vspace"></div>
+<div class="vspace"></div>
+<p>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</p>
+<div class="vspace"></div>
+<div class="vspace"></div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 readonly_sub_header padding_none">
+        API Response:
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>Message:</b></div>
+    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 responsedv">
+        @ViewBag.Message
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-10 required">
+        @ViewBag.Error
+    </div>
+    <div class="col-lg-1 col-md-1"></div>
+</div>
+

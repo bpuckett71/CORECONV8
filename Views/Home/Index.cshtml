@@ -1,0 +1,85 @@
+﻿@model Credential_Mvc_sample.Models.CredModel
+
+@{
+    ViewBag.Title = "Corecon External API Client";
+}
+
+<div class="main-div">
+    <div class="vspace"></div>    
+    <div class="vspace"></div>
+    <div class="vspace"></div>
+    <!-- Main Header -->
+    <div class="main-div">
+
+        @using (Html.BeginForm("GetToken", "Home", FormMethod.Post))
+        {
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-left required">
+                    @Html.LabelFor(model => model.UserName)
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(Model => Model.UserName)
+                </div>
+            </div>
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-left required">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(Model => Model.Password)
+                </div>
+            </div>
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-left required">
+                    @Html.LabelFor(model => model.ClientID)
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    @Html.TextBoxFor(model => model.ClientID, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(Model => Model.ClientID)
+                </div>
+            </div>
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-left required">
+                    @Html.LabelFor(model => model.SecretCode)
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    @Html.TextBoxFor(model => model.SecretCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(Model => Model.SecretCode)
+                </div>
+            </div>
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-left required">
+                    @Html.LabelFor(model => model.Scopes)
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    @Html.TextBoxFor(model => model.Scopes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(Model => Model.Scopes)
+                </div>
+            </div>
+            <div class="vspace"></div>
+            <div class="vspace"></div>
+            <div class="row">
+                <div class="col-lg-4 col-md-2 col-sm-4 col-xs-6"></div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 text-right">
+                    <button type="submit" class="primaryButton_icon">Get Token</button>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-2"></div>
+            </div>
+            <div class="vspace"></div>
+        }
+    </div>
+
+</div>
+
