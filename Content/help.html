@@ -1,0 +1,246 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Corecon Knowledge base</title>
+    <!--<base href="/">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link href="Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        function CopyToClipboard(containerid) {
+            var range = document.createRange();
+            range.selectNode(containerid);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Main Header -->
+        <div class="row">
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-6">
+
+                <div class="vspace"></div>
+                <div class="vspace"></div>
+                <span class="corecon-menu-logo">
+                    <img class="img-responsive" src="../images/logo-l.png">
+                </span>
+            </div>
+            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-6">
+
+            </div>
+        </div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="vspace"></div>
+        <div class="container">
+            <div class="landing_page_stats_sub_title">Credential Code flow</div>
+            <p class="pmain">Once you have the client ID and secret code, you can request an Access Token</p>
+            <div class="landing_page_stats_sub_title_checkUps ">Steps to access token</div>
+            <div>
+                <ol>
+                    <li>
+                        To get access token, make an http client post call to API end point with userName, password, scopes and "password" as grant_type<br />
+                        like below given sample code
+                        <div class="contentdv1">
+                            <div class="text-right">
+                                <button type="button" onclick="CopyToClipboard(AccessToken)" class="btn helpbtn-default">
+                                    <i title="Copy to clipboard" class="fa fa-clipboard"></i>
+                                </button>
+                            </div>
+                            <code>
+                                <pre>
+                                <div id="AccessToken">
+    public async Task<ActionResult> GetAccessToken()
+    {
+    try
+    {
+    byte[] plainTextBytes = Encoding.UTF8.GetBytes(ClientID + ":" + SecretCode);
+    string key = System.Convert.ToBase64String(plainTextBytes);
+
+    HttpClient _client = new HttpClient
+    {
+    BaseAddress = new Uri(ConstantValue.BaseAddress + "token")
+    };
+
+    _client.DefaultRequestHeaders.Accept.Clear();
+    _client.DefaultRequestHeaders.Add("authorization", "Basic " + key);
+    _client.DefaultRequestHeaders.Add("Access-Control-Allow-Origin", "*");
+    _client.DefaultRequestHeaders.Add("No-Auth", "true");
+    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+
+    HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, ConstantValue.BaseAddress + "token")
+    {
+    Content = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+        { "grant_type", "password" },
+        { "username", UserName },
+        { "password", Password },
+        { "scope", Scopes }
+        })
+        };
+        HttpResponseMessage response = await _client.SendAsync(requestMessage);
+        if (response.IsSuccessStatusCode)
+        {
+        HttpContent responseContent = response.Content;
+        string responseString = responseContent.ReadAsStringAsync().Result;
+        dynamic tokenInfo = JObject.Parse(responseString);
+        token.AccessToken = tokenInfo.access_token;
+        token.ExpiresIn = tokenInfo.expires_in;
+        token.RefreshToken = tokenInfo.refresh_token;
+        token.TokenType = tokenInfo.token_type;
+        TempData["Token"] = token;
+        return View("Index");
+        }
+        else
+        {
+        ViewBag.Error = "Error : " + response.ReasonPhrase;
+        return View("Index");
+        }
+        }
+        catch (Exception ex)
+        {
+        ViewBag.Message = "Error : " + ex.Message;
+        return View("Index");
+        }
+        }
+</div>
+</pre>
+                            </code>
+                        </div>
+                        <var> Scope</var> " is authorization scopes like add,read,edit.
+                        <div class="contentdv">
+                            scope sequence should be as:<br />
+                            <ul><li>add</li><li>read</li><li>edit</li><li>add,read</li><li>read,edit</li><li>add,read,edit</li></ul>
+                        </div>
+                    </li>
+                    <li>
+                        The API response takes the following form:
+                        <div class="contentdv">
+                            {"access_token":"Access_Token","refresh_token":"Refresh_Token",
+                            "expires_in":302, "token_type":"bearer"}
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div class="vspace"></div>
+            <div class="landing_page_stats_sub_title_checkUps ">Generate Token from Refresh Token</div>
+            <p class="pmain">To generate the new token from refresh token</p>
+            <div class="contentdv2">
+                <div class="text-right">
+                    <button type="button" onclick="CopyToClipboard(RefreshToken)" class="btn helpbtn-default">
+                        <i title="Copy to clipboard" class="fa fa-clipboard"></i>
+                    </button>
+                </div>
+                <code>
+                    <pre>
+<div id="RefreshToken">
+    public async Task<ActionResult> GetRefreshToken(string refresh_token)
+    {
+        Token token = new Token();
+        try
+        {            
+            HttpClientHandler handler = new HttpClientHandler();
+            HttpClient client = new HttpClient(handler);
+            string ClientIDandSecret = client_id + ":" + secret_key;
+            string authorizationHeader = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientIDandSecret));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorizationHeader);
+            Dictionary<string, string> RequestBody = new Dictionary<string, string>
+            {
+                {"grant_type", "refresh_token"},
+                {"refresh_token", refresh_token}
+            };
+            HttpResponseMessage tokenResponse = client.PostAsync(ConstantValue.BaseAddress + "token", new FormUrlEncodedContent(RequestBody)).Result;
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+
+                HttpContent responseContent = tokenResponse.Content;
+                string responseString = responseContent.ReadAsStringAsync().Result;
+                dynamic tokenInfo = JObject.Parse(responseString);
+
+                token.AccessToken = tokenInfo.access_token;
+                token.ExpiresIn = tokenInfo.expires_in;
+                token.RefreshToken = tokenInfo.refresh_token;
+                token.TokenType = tokenInfo.token_type;
+                TempData["Token"] = token;
+                return View("Index", token);
+
+            }
+            else
+            {
+                ViewBag.Error = "Error : " + tokenResponse.ReasonPhrase;
+                return View("Index", token);
+            }
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Message = "Error : " + ex.Message;
+            return View("Index", token);
+        }
+    }
+    </div>
+                    </pre>
+                </code>
+            </div>
+            <div class="vspace"></div>
+            <div class="landing_page_stats_sub_title_checkUps ">Corecon External API Calling</div>
+            <p class="pmain"> To access corecon external API, you will pass access token with API request</p>
+            <div class="contentdv2">
+                <div class="text-right">
+                    <button type="button" onclick="CopyToClipboard(APICall)" class="btn helpbtn-default">
+                        <i title="Copy to clipboard" class="fa fa-clipboard"></i>
+                    </button>
+                </div>
+                <code>
+                    <pre>
+<div id="APICall">
+    public async Task<ActionResult> GetAPICallWithToken(string accessToken)
+    {        
+        try
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            HttpClient client = new HttpClient(handler);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var APIResponse = client.GetAsync(ConstantValue.BaseAddress + "api/test/resource1").Result;
+            if (APIResponse.IsSuccessStatusCode)
+            {
+                var JsonContent = APIResponse.Content.ReadAsStringAsync().Result;
+                string Message = JsonConvert.DeserializeObject<string>(JsonContent);
+                ViewBag.Message = Message;
+                return View("Index");
+            }
+            else
+            {
+                ViewBag.Message = "Error : " + APIResponse.ReasonPhrase;
+                return View("Index");
+            }
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Message = "Error : " + ex.Message;
+            return View("Index");
+        }
+    }
+    </div>
+                </pre>
+                </code>
+            </div>
+
+            <div style="width: 100%;position: relative;">
+                <p style="text-align: center;font-size: 8pt;color: #808080;" align="center">
+                    Copyright ©
+                    <script type="text/javascript">document.write(new Date().getUTCFullYear());</script> Corecon Technologies, Inc.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
